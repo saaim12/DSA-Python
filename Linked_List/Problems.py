@@ -5,8 +5,8 @@ list=LinkedList()
 list = LinkedList()
 list.append("A")
 list.append("B")
-list.append("C")
-list.append("D")
+list.append("A")
+list.append("A")
 list.print_list()
 print("Length:", list.getlength())
 
@@ -92,7 +92,15 @@ def reverse(head):
     head.next.next = head
     head.next = None
     return newHead
-
+def is_palindrome(list):
+  # Solution 1:
+  s = ""
+  p = list.head
+  while p:
+    s += p.data
+    p = p.next
+      #this is reversing the string
+  return s == s[::-1]
 # Swapping example
 swapping(list, 'B', 'C')
 list.print_list()
@@ -100,5 +108,6 @@ list.print_list()
 print("Reversed:")
 list.head = reverse(list.head)
 list.print_list()
+print(is_palindrome(list))
 
 
