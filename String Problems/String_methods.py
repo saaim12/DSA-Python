@@ -80,3 +80,5 @@ s = "hello"
 # Instead:
 s = "H" + s[1:]  # "Hello"
 
+str2="dabcabcbbabc"
+print(str2.find("abc"))

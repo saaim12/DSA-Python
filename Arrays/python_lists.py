@@ -72,4 +72,62 @@ def missing_and_repeating_values(arr):
     print(repeating)
     print(missing)
 print(missing_and_repeating_values([[9,1,7],[8,9,2],[3,4,6]]))
+listing=[1,2,3,4]
+listing.insert(2,45)
+print(listing)
+listing.pop()
+print(listing)
+# printing subarrays
+list1=[1,2,3,4,5]
+maxsum=0
+for st in range(len(list1)):
+    for end in range(st, len(list1)):
+        sum=0
+        for i in range(st, end + 1):
+            sum+=list1[i]
+            print(list1[i], end="")
+        maxsum=max(maxsum,sum)
+        print()
 
+print("max sum is",maxsum)
+def binary_search(arr, target):
+    left = 0
+    right = len(arr) - 1
+
+    while left <= right:
+        mid = (left + right) // 2  # middle index
+        if arr[mid] == target:
+            return mid  # found
+        elif arr[mid] < target:
+            left = mid + 1  # search right half
+        else:
+            right = mid - 1  # search left half
+
+    return -1  # not found
+def binary_search_in_rotated_array(arr,target):
+    left = 0
+    right = len(arr) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == target:
+            return mid
+        if arr[left] < arr[mid]: #left sorted and target is in it
+
+             if arr[left]<= target <= arr[mid]:
+                right=mid-1
+             else:
+                left=mid+1
+        else:
+            if arr[mid]<= target<=arr[right]:
+                left=mid+1
+            else:
+                right=mid-1
+    return -1
+
+
+
+
+
+
+
+print(binary_search_in_rotated_array([3,4,5,6,7,0,1,2],0))
