@@ -140,6 +140,51 @@ class Graph:
 
         return distances
 
+    def bellmanford(self,start):
+        distances = {node: float('inf') for node in self.graph}  # making a dict and adding -int as a temp distance for every node
+        distances[start] = 0
+        vertices = len(self.graph)
+        for _ in range(vertices - 1):
+            for u in self.graph:
+                for v, w in self.graph[u]:
+                    if distances[u] + w < distances[v]:
+                        distances[v] = distances[u] + w
+
+        # Step 3: Check for negative weight cycles
+        for u in self.graph:
+            for v, w in self.graph[u]:
+                if distances[u] + w < distances[v]:
+                    print("Graph contains negative weight cycle")
+                    return None
+        return distances
+
+    def prims(self, start):
+        visited = set()
+        mst_edges = []   # store edges in MST
+        total_weight = 0
+
+        # Min-heap → (weight, current_node, neighbor)
+        heap = [(0, start, None)]
+
+        while heap:
+            weight, node, parent = heapq.heappop(heap)
+
+            if node in visited:
+                continue
+
+            visited.add(node)
+
+            if parent is not None:  # avoid adding the very first dummy edge
+                mst_edges.append((parent, node, weight))
+                total_weight += weight
+
+            for neighbor, w in self.graph[node]:
+                if neighbor not in visited:
+                    heapq.heappush(heap, (w, neighbor, node))
+
+        return mst_edges, total_weight
+
+
 
 
 
@@ -169,4 +214,4 @@ g2.display()
 print("Cycle Exists?", g2.cycle_detection_in_undirected_graph())
 g2.display()
 print(g.diskstra("0"))
-g.findCheapestPrice([[0,1,100],[1,2,100],[2,0,100],[1,3,600],[2,3,200]])
+print(g.bellmanford("0"))

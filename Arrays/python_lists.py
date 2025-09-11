@@ -131,3 +131,7 @@ def binary_search_in_rotated_array(arr,target):
 
 
 print(binary_search_in_rotated_array([3,4,5,6,7,0,1,2],0))
+list3=[1,2,3,4,5,5]
+list3.append(66)
+print(list3)
+
