@@ -61,6 +61,22 @@ def insertion(llist, data, index):
     llist.i += 1
     return f"Inserted at index {index}"
 
+#insertion using recursion
+def insertion_recursion(newval,llist,index):
+    if index <0 or index > llist.getlength():
+        return "index out of bounds"
+    def insert(node,index):
+        if index==0:
+            newn=Node(newval)
+            newn.next=node
+            return newn
+        node.next=insert(node.next,index-1)
+        return node
+    llist.head=insert(llist.head,index)
+    llist.i+=1
+    return f"Inserted at index {index} (recursively)"
+
+
 
 # Deletion at index
 def deletion(llist, index):
@@ -86,23 +102,25 @@ def deletion(llist, index):
     return f"Deleted from index {index}"
 
 
-# Testing
-# llist = LinkedList()
-# llist.append("A")
-# llist.append("B")
-# llist.append("C")
-# llist.prepend("D")
-#
-# print("Before insertion:")
-# llist.print_list()
-# print("Length:", llist.getlength())
-#
-# print("\nAfter insertion at index 2:")
-# print(insertion(llist, 3, 2))
-# llist.print_list()
-# print("Length:", llist.getlength())
-#
-# print("\nAfter deletion at index 0:")
-# print(deletion(llist, 0))
-# llist.print_list()
-# print("Length:", llist.getlength())
+#Testing
+llist = LinkedList()
+llist.append("A")
+llist.append("B")
+llist.append("C")
+llist.prepend("D")
+
+print("Before insertion:")
+llist.print_list()
+print("Length:", llist.getlength())
+
+print("\nAfter insertion at index 2:")
+print(insertion(llist, 3, 2))
+llist.print_list()
+print("Length:", llist.getlength())
+
+print("\nAfter deletion at index 0:")
+print(deletion(llist, 0))
+llist.print_list()
+print("Length:", llist.getlength())
+print(insertion_recursion(23,llist,4))
+llist.print_list()

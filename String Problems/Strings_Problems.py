@@ -2,7 +2,7 @@ string = "abd"
 
 def subsequences(unprocessed, processed, result):
     if unprocessed == "":
-        result.append(processed)
+        result.append(list(processed))
         return
     char = unprocessed[0]
     subsequences(unprocessed[1:], processed, result)          # exclude char
