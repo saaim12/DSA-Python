@@ -76,8 +76,39 @@ def insertion_recursion(newval,llist,index):
     llist.i+=1
     return f"Inserted at index {index} (recursively)"
 
-
-
+def reverseBetween( head, left, right):
+    if not head or left == right:
+        return head
+    dummy = Node(0)
+    dummy.next = head
+        # 1. Locate Pointers
+        # 'node_before_start' is the node immediately preceding 'left'
+    node_before_start = dummy
+    for _ in range(left - 1):
+        node_before_start = node_before_start.next
+        # 'sublist_tail' is the first node of the sublist (original position 'left')
+    sublist_tail = node_before_start.next
+        # 2. Reverse the Sublist (Standard Iterative Reversal)
+        # We need to reverse 'right - left + 1' nodes.
+    prev = None
+    curr = sublist_tail
+        # 'i' counts the nodes being reversed
+    for _ in range(right - left + 1):
+        temp_next = curr.next  # 1. Save the next node
+        curr.next = prev  # 2. Reverse the current node's pointer
+        prev = curr  # 3. Advance 'prev' to 'curr'
+        curr = temp_next  # 4. Advance 'curr' to 'temp_next' (the next node)
+        # After the loop:
+        # - 'prev' is the new head of the reversed sublist (e.g., node 4)
+        # - 'curr' is the node immediately following the reversed sublist (e.g., node 5)
+        # 3 & 4. Re-stitch the list
+        # Connect the end of the reversed sublist (the original tail, e.g., node 2)
+        # to the rest of the original list (e.g., node 5).
+    sublist_tail.next = curr
+        # Connect the main list before the sublist (e.g., node 1)
+        # to the new head of the reversed sublist (e.g., node 4).
+    node_before_start.next = prev
+    return dummy.next
 # Deletion at index
 def deletion(llist, index):
     if index >= llist.getlength() or index < 0:
@@ -104,23 +135,29 @@ def deletion(llist, index):
 
 #Testing
 llist = LinkedList()
-llist.append("A")
-llist.append("B")
-llist.append("C")
-llist.prepend("D")
-
-print("Before insertion:")
+# llist.append("A")
+# llist.append("B")
+# llist.append("C")
+# llist.prepend("D")
+llist.append(1)
+llist.append(2)
+llist.append(3)
+llist.append(4)
+llist.append(5)
+# print("Before insertion:")
+# llist.print_list()
+# print("Length:", llist.getlength())
+#
+# print("\nAfter insertion at index 2:")
+# print(insertion(llist, 3, 2))
+# llist.print_list()
+# print("Length:", llist.getlength())
+#
+# print("\nAfter deletion at index 0:")
+# print(deletion(llist, 0))
+# llist.print_list()
+# print("Length:", llist.getlength())
+# print(insertion_recursion(23,llist,4))
 llist.print_list()
-print("Length:", llist.getlength())
-
-print("\nAfter insertion at index 2:")
-print(insertion(llist, 3, 2))
-llist.print_list()
-print("Length:", llist.getlength())
-
-print("\nAfter deletion at index 0:")
-print(deletion(llist, 0))
-llist.print_list()
-print("Length:", llist.getlength())
-print(insertion_recursion(23,llist,4))
+reverseBetween(llist.head,2,4)
 llist.print_list()
