@@ -64,7 +64,7 @@ class Graph:
         visited.add(start)
 
         # add current node to path (string concatenation)
-        path = path + str(start) + " "
+        path = path + str(start) + "  --->  "
 
         # if we reached the target, print the path
         if start == target:
