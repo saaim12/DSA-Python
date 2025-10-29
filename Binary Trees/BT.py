@@ -1,4 +1,5 @@
 import collections
+from collections import deque
 from queue import Queue
 
 
@@ -51,30 +52,22 @@ class BinaryTree(object):
     def levelorder_print(self, root):
         if not root:
             return []
-
-        result = []
-        q = collections.deque()
-        q.append(root)
-
+        q=collections.deque([root])
+        res=[]
         while q:
-            level_size = len(q)  # number of nodes at current level
-            level = []
 
-            for _ in range(level_size):
+            level=[]
+            length=len(q)
+            for i in range(length):
                 node = q.popleft()
+                level.append(node.value)
+                if node.left:
+                    q.append(node.left)
+                if node.right:
+                    q.append(node.right)
+            res.append(level)
+        return res
 
-                if node:
-                    level.append(node.value)
-
-                    if node.left:
-                        q.append(node.left)
-                    if node.right:
-                        q.append(node.right)
-
-            if level:
-                result.append(level)
-
-        return result
 # 1-2-4-5-3-6-7-
 # 4-2-5-1-6-3-7
 # 4-5-2-6-7-3-1
