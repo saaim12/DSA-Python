@@ -1,3 +1,4 @@
+import heapq
 from collections import deque
 
 
@@ -78,7 +79,69 @@ class graph:
                     return True
         return False
 
+    def shortest_path_in_DAG(self, start):
+        visited = set()
+        stack = []  # store topological order
 
+        def topo(node):
+            visited.add(node)
+            for nei, w in self.graph[node]:
+                if nei not in visited:
+                    topo(nei)
+            stack.append(node)
+
+        # Step 1: Perform Topological Sort
+        for v in self.graph:
+            if v not in visited:
+                topo(v)
+
+        stack.reverse()  # Topological order
+
+        # Step 2: Initialize distances
+        dist = {v: float('inf') for v in self.graph}
+        dist[start] = 0
+
+        # Step 3: Relax edges in topological order
+        for node in stack:
+            if dist[node] != float('inf'):
+                for nei, weight in self.graph[node]:
+                    if dist[node] + weight < dist[nei]:
+                        dist[nei] = dist[node] + weight
+
+        print("\nShortest distances from node", start)
+        for node in dist:
+            print(f"{start} → {node} = {dist[node]}")
+
+        return dist
+
+    def shortes_path_in_undirected_graph_with_unit_weights(self,start):
+        dist = {node: float('inf') for node in self.graph}
+        dist[start] = 0
+        q=deque([start])
+        while q :
+            n,w=q.popleft()
+            for nei in self.graph[n]:
+                if dist[nei] ==float('inf'):
+                    dist[nei]=dist[n]+1
+                q.append(n)
+        return dist
+
+    def dijkstra(self,start):
+        dist={node:float('inf') for node in graph}
+        min_heap=heapq.heappush([(0,start)])
+        visited=set()
+        dist[start] = 0
+        while min_heap:
+            dist,node=heapq.heappop()
+            if node in visited:
+                continue
+            visited.add(node)
+            for nei,w in graph[node]:
+                if dist[node]+w<dist[nei]:
+                    dist[nei]=dist[node]+w
+                    heapq.heappush(min_heap, (dist[nei], nei))
+
+            return dist
 
 
 
@@ -108,5 +171,18 @@ g.display()
 print("\nBFS (starting from 1):", g.BFS(1))
 print("\nDFS (starting from 1):", g.DFS(1,None,None))
 
+g3 = graph(directed=True)
+g3.add_edge(1, 2, 3)
+g3.add_edge(1, 6, 4)
+g3.add_edge(2, 3, 5)
+g3.add_edge(2, 4, 6)
+g3.add_edge(6, 7, 7)
+g3.add_edge(6, 8, 8)
+g3.add_edge(4, 5, 9)
+g3.add_edge(7, 5, 10)
+
+g3.display()
+print("\nShortest Path in DAG from node 1:")
+g3.shortest_path_in_DAG(1)
 
 
