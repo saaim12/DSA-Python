@@ -123,7 +123,7 @@ class graph:
             for nei in self.graph[n]:
                 if dist[nei] ==float('inf'):
                     dist[nei]=dist[n]+1
-                q.append(n)
+                q.append(nei)
         return dist
 
     def dijkstra(self,start):
