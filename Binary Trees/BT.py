@@ -68,6 +68,23 @@ class BinaryTree(object):
             res.append(level)
         return res
 
+    def widthOfBinaryTree(self, root):
+        max_width = 0
+        q = deque([(root, 0)])  # (node, index)
+        while q:
+            level_length = len(q)
+            _, first_index = q[0]
+            _, last_index = q[-1]
+            max_width = max(max_width, last_index - first_index + 1)
+            for _ in range(level_length):
+                node, index = q.popleft()
+                index -= first_index
+                if node.left:
+                    q.append((node.left, 2 * index + 1))
+                if node.right:
+                    q.append((node.right, 2 * index + 2))
+
+        return max_width
 # 1-2-4-5-3-6-7-
 # 4-2-5-1-6-3-7
 # 4-5-2-6-7-3-1
@@ -90,3 +107,4 @@ print(tree.print_tree("preorder"))
 print(tree.print_tree("inorder"))
 print(tree.print_tree("postorder"))
 print(tree.levelorder_print(tree.root))
+print(tree.widthOfBinaryTree(tree.root))

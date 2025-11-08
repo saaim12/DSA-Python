@@ -27,3 +27,27 @@ def subStrings(nums):
     dfs([],0)
     return res
 print(subStrings([1,2,2]))
+
+
+def permutation(s):
+    if len(s)==1:
+        return s
+    result=[]
+    for i,ch in enumerate(s):
+        rest=s[:i]+s[i+1:]
+        for p in permutation(rest):
+            result.append(ch+p)
+
+    return result
+
+print(permutation("abc"))
+
+#built in method
+from itertools import permutations
+
+s = "abc"
+
+# Using set to remove duplicates
+perm_strings = set(''.join(p) for p in permutations(s))
+
+print(perm_strings)
