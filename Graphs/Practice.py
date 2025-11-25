@@ -79,6 +79,28 @@ class graph:
                     return True
         return False
 
+    def cycle_in_directed(self):
+        visited = set()
+        path = set()
+
+        def dfs(node):
+            visited.add(node)
+            path.add(node)
+            for nei, w in self.graph[node]:
+                if nei not in visited:
+                    if dfs(nei):
+                        return True
+                elif nei in path:
+                    return True
+            path.remove(node)
+            return False
+
+        for node in self.graph:
+            if node not in visited:
+                if dfs(node):
+                    return True
+        return False
+
     def shortest_path_in_DAG(self, start):
         visited = set()
         stack = []  # store topological order
@@ -114,34 +136,66 @@ class graph:
 
         return dist
 
-    def shortes_path_in_undirected_graph_with_unit_weights(self,start):
+    def shortes_path_in_undirected_graph_with_unit_weights(self, start):
         dist = {node: float('inf') for node in self.graph}
         dist[start] = 0
-        q=deque([start])
-        while q :
-            n,w=q.popleft()
-            for nei in self.graph[n]:
-                if dist[nei] ==float('inf'):
-                    dist[nei]=dist[n]+1
-                q.append(nei)
+        q = deque([start])
+
+        while q:
+            node = q.popleft()
+
+            for nei, w in self.graph[node]:
+                if dist[nei] == float('inf'):  
+                    dist[nei] = dist[node] + 1
+                    q.append(nei)
+
         return dist
 
-    def dijkstra(self,start):
-        dist={node:float('inf') for node in graph}
-        min_heap=heapq.heappush([(0,start)])
-        visited=set()
+    def dijkstra(self, start):
+        dist = {node: float('inf') for node in self.graph}
         dist[start] = 0
-        while min_heap:
-            dist,node=heapq.heappop()
-            if node in visited:
-                continue
-            visited.add(node)
-            for nei,w in graph[node]:
-                if dist[node]+w<dist[nei]:
-                    dist[nei]=dist[node]+w
-                    heapq.heappush(min_heap, (dist[nei], nei))
 
-            return dist
+        heap = [(0, start)]
+
+        while heap:
+            cur_dist, node = heapq.heappop(heap)
+
+            # Skip if  already found a better distance
+            if cur_dist > dist[node]:
+                continue
+
+            for nei, w in self.graph[node]:  # use self.graph
+                if dist[node] + w < dist[nei]:
+                    dist[nei] = dist[node] + w
+                    heapq.heappush(heap, (dist[nei], nei))
+
+        return dist
+
+    def minimumEffortPath(self, heights):
+        rows = len(heights)
+        cols = len(heights[0])
+        efforts = [[float('inf')] * cols for _ in range(rows)]
+        efforts[0][0] = 0
+        pq = [(0, 0, 0)]
+
+        directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+
+        while pq:
+            curr_eff, r, c = heapq.heappop(pq)
+            if r == rows - 1 and c == cols - 1:
+                return curr_eff
+
+            for dr, dc in directions:
+                nr, nc = r + dr, c + dc
+                if 0 <= nr < rows and 0 <= nc < cols:  # effort to move to neighbor
+                    diff = abs(heights[nr][nc] - heights[r][c])
+                    new_effort = max(curr_eff, diff)
+                    # Relaxation
+                    if new_effort < efforts[nr][nc]:
+                        efforts[nr][nc] = new_effort
+                        heapq.heappush(pq, (new_effort, nr, nc))
+
+        return 0
 
 
 
@@ -185,4 +239,5 @@ g3.display()
 print("\nShortest Path in DAG from node 1:")
 g3.shortest_path_in_DAG(1)
 
-
+print(g3.dijkstra(1))
+print(g3.minimumEffortPath([[1,2,2],[3,8,2],[5,3,5]]))
