@@ -147,10 +147,68 @@ class Graph:
         self.print_matrix(efforts, "Effort Matrix (end)")
         return efforts[dr][dc]
 
-    def cheapest_flight(self,grid):
-        #first make graph
+    def findCheapestPrice(self, n, flights, src, dst, k):
+        # Build graph
+        graph = {i: [] for i in range(n)}
+        for u, v, price in flights:
+            graph[u].append((v, price))
 
+        # (stops,node,cost)
+        queue = deque([(0, src, 0)])
 
+        # distances[node][stops] = min cost
+        distances = {i: float('inf') for i in range(len(graph))}
+        print(distances)
+        print(graph)
+        while queue:
+            stops, node, dist = queue.popleft()
+            if stops > k:
+                continue
+            for nei, w in graph[node]:
+                newdist = dist + w
+                if newdist < distances[nei]:
+                    distances[nei] = newdist
+                    queue.append((stops + 1, nei, newdist))
+
+        return distances[dst] if distances[dst] != float('inf') else -1
+
+        # def findCheapestPrice(self, n, flights, src, dst, K):
+        #     # Build the graph as adjacency list: graph[node] = [(neighbor, cost), ...]
+        #     graph = defaultdict(list)
+        #     for s, d, w in flights:
+        #         graph[s].append((d, w))
+        #
+        #     # Min-heap (priority queue): stores tuples (total_cost_so_far, current_node, stops_used)
+        #     pq = [(0, src, 0)]  # Start from src with cost 0 and 0 stops
+        #
+        #     # Dictionary to store the minimum stops used to reach a node
+        #     best = {}  # best[node] = min stops used so far to reach node
+        #
+        #     while pq:
+        #         cost, node, stops = heapq.heappop(pq)  # Pop the node with smallest total cost
+        #
+        #         # If we reached the destination, return the current cost
+        #         # This works because heap always gives us the smallest cost first
+        #         if node == dst:
+        #             return cost
+        #
+        #         # If stops exceed the allowed K stops, skip this path
+        #         if stops > K:
+        #             continue
+        #
+        #         # If we've already reached this node with fewer or equal stops, skip
+        #         # This prevents exploring worse paths in terms of stops
+        #         if node in best and best[node] <= stops:
+        #             continue
+        #         best[node] = stops
+        #
+        #         # Explore neighbors
+        #         for nei, w in graph[node]:
+        #             # Push neighbor into heap with updated cost and stops
+        #             heapq.heappush(pq, (cost + w, nei, stops + 1))
+        #
+        #     # If destination is unreachable within K stops
+        #     return -1
 
 
 
@@ -175,7 +233,8 @@ grid = [
     [1, 0, 0, 1]
 ]
 
-print("Shortest path in binary maze:",
-      g.shortest_binary_maze(grid, (0,1), (2,2)))
+print("Shortest path in binary maze:",g.shortest_binary_maze(grid, (0,1), (2,2)))
 
-#print("Minimum effort path:", g.min_effort_path((0,0), [[1,2,2],[3,8,2],[5,3,5]], (2,2)))
+print("Minimum effort path:", g.min_effort_path((0,0), [[1,2,2],[3,8,2],[5,3,5]], (2,2)))
+print("cheapest fligh problem :::: ", g.findCheapestPrice( 4,[[0,1,100],[1,2,100],[2,0,100],[1,3,600],[2,3,200]],0, 3, 1))
+
