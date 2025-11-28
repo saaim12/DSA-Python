@@ -27,4 +27,4 @@ def sub_sequences_equals_k(idx,arr,path,res,target,sum):
     sub_sequences_equals_k(idx+1,arr,path,res,target,sum)
     return res
 
-print(sub_sequences_equals_k(0,[1,2,1],[],[],2,0))
+print(sub_sequences_equals_k(0,[1,2,1],[],[],3,0))
