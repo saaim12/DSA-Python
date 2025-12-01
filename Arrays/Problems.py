@@ -1,8 +1,8 @@
-#generating all subarrays
-arr=[1,2,3]
-out=[]
-for i in range(len(arr)):
-    for j in range(i,len(arr)):
-        out.append(arr[i:j+1])
+###### we can  make Subarrays by O(n^2) Complexity ######
+array=[1,2,3]
+result=[]
+for i in range(len(array)):
+    for j in range(i+1,len(array)+1):
+        result.append(array[i:j])
 
-print(out)
+print(result)

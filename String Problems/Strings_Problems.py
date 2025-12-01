@@ -51,3 +51,33 @@ s = "abc"
 perm_strings = set(''.join(p) for p in permutations(s))
 
 print(perm_strings)
+string="aba"
+res=[]
+se=set()
+for i in range(len(string)):
+    for j in range(i+1,len(string)+1):
+        s=string[i:j]
+        if s[0] not in se:
+            res.append(s)
+            se.add(s[0])
+
+print(res)
+def unique_start_substrings(s):
+    seen = set()
+    res = []
+    current = ""
+
+    for ch in s:
+        if ch not in seen:
+            if current:
+                res.append(current)
+            current=ch
+            seen.add(ch)
+        else:
+            current+=ch
+
+    if current:
+        res.append(current)
+
+    return res
+print(unique_start_substrings("aba"))
