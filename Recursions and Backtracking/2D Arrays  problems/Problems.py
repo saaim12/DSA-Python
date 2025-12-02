@@ -208,3 +208,39 @@ print("Optimized Sudoku Solution:")
 solveSudokuOptimized(sudoku_board)
 for row in sudoku_board:
     print(row)
+
+
+## graph coloring problem ####
+def graphColoring(V, edges, m):
+
+        # Build adjacency list
+    graph = {i: [] for i in range(V)}
+    for u, w in edges:
+        graph[u].append(w)
+        graph[w].append(u)
+
+    color = [0] * V
+
+    def is_safe(node, c):
+        for nei in graph[node]:
+            if color[nei] == c:
+                return False
+        return True
+
+    def solve(node):
+        if node == V:
+             return True
+
+        for c in range(1, m + 1):
+            if is_safe(node, c):
+                color[node] = c
+                if solve(node + 1):
+                    return True
+                color[node] = 0  # backtrack
+
+        return False
+
+    return solve(0)
+
+
+print(graphColoring(4,[[0, 1], [1, 3], [2, 3], [3, 0], [0, 2]],2))
