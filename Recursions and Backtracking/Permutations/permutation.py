@@ -45,3 +45,20 @@ def permutation_2(arr):
     permute_2(0)
     return res
 print(permutation_2([1,2,3]))
+
+######## dont know shit about this ust did it remembering #####
+import math
+def getPermutation( n, k):
+    nums = [str(i) for i in range(1, n + 1)]
+    k -= 1
+    res = []
+    for i in range(n, 0, -1):
+        fact = math.factorial(i - 1)
+        index = k // fact
+        res.append(nums[index])
+        nums.pop(index)
+        k %= fact
+
+    return "".join(res)
+
+print(getPermutation(4,13))
