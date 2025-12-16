@@ -438,3 +438,6 @@ print(rotation_count2([1,2,3,4,5]))         # 0
 print(rotation_count2([2,1,2,2,2]))         # 1
 print(rotation_count2([1,1,1,1,1,0,1]))     # 5 X
 
+
+
+
