@@ -92,7 +92,7 @@ def Count_Subarrays_with_sum_k_optimized(arr,k):
         if prefix_sum==k:
             count+=1
         count+=mp[prefix_sum-k]
-        mp[prefix_sum]=1
+        mp[prefix_sum]+=1
 
     return count
 # We use mp[prefix_sum] += 1 instead of mp[prefix_sum] = 1 because mp needs to track how many times each prefix sum has occurred up to the current index.
@@ -102,7 +102,7 @@ def Count_Subarrays_with_sum_k_optimized(arr,k):
 # Using += 1 allows us to correctly count both subarrays [1, 2] at indices 0–1 and [1, 2] at indices 2–3.
 # Therefore, incrementing the count ensures that all possible subarrays that end at the current index
 # and sum to k are counted accurately, whereas simply setting it to 1 would undercount and produce incorrect results.
-print("count subarrays with sum k ",Count_Subarrays_with_sum_k_optimized([1,2,3],k))
+print("count subarrays with sum k ",Count_Subarrays_with_sum_k_optimized([1,2,3],3))
 
 
 

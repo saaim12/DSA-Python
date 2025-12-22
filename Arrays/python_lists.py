@@ -8,6 +8,17 @@ def two_sum(arr, target):
                 return [i, j]
     return -1
 
+def twoSum_with_hashmap(nums, target):
+    mp = {}  # value -> index
+    for i, num in enumerate(nums):
+        complement = target - num
+        if complement in mp:
+            return [mp[complement], i]
+        mp[num] = i
+    return []
+nums = [2, 7, 11, 15]
+target = 9
+print(twoSum_with_hashmap(nums, target))  # Output: [0, 1]
 
 # ----------------------
 # Two Sum - Better O(n log n)

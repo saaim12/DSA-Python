@@ -126,5 +126,3 @@ def max_consecutive_ones(arr):
 
 print(max_consecutive_ones([1,2,1,1,1,1,0,0,2,3,4,1,1,1,1,1,1,1]))
 
-
-def two_sum(arr,target):
