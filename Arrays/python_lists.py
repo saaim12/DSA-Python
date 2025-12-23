@@ -23,40 +23,24 @@ print(twoSum_with_hashmap(nums, target))  # Output: [0, 1]
 # ----------------------
 # Two Sum - Better O(n log n)
 # ----------------------
-def two_sum_better(arr, target):
+def two_sum_2_better(arr, target):
+    # this is only possible if arr is sorted not in case of not sorted
+    # in that case we have to find elements first then find the origional indices from the origional arr
     if not arr:
         return []
 
-    arr2 = arr[:]  # original array copy
     arr.sort()
-
     st, end = 0, len(arr) - 1
-    result = [-1, -1]
 
     while st < end:
         s = arr[st] + arr[end]
         if s == target:
-            result = [arr[st], arr[end]]
-            break
+            return [st,end]
         elif s > target:
             end -= 1
         else:
             st += 1
-
-    # Map values back to indices in original array
-    end_result = [-1, -1]
-    found = 0
-    for i in range(len(arr2)):
-        if arr2[i] == result[0] and end_result[0] == -1:
-            end_result[0] = i
-            found += 1
-        elif arr2[i] == result[1] and end_result[1] == -1:
-            end_result[1] = i
-            found += 1
-        if found == 2:
-            break
-
-    return end_result
+    return [-1,-1]
 
 
 # ----------------------
