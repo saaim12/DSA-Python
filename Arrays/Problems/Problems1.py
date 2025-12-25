@@ -101,16 +101,31 @@ print(move_all_zero_to_the_end([1,0,2,0,3,4,5,0,6,7,0,9,10]))
 
 ## optimal
 def move_zeros_to_end_optimal(arr):
-    j=0
+    j = 0  # position to place next non-zero
+
     for i in range(len(arr)):
-        if arr[i]!=0:
-            arr[i],arr[j]=arr[j],arr[i]
-            j+=1
+        if arr[i] != 0:
+            arr[i], arr[j] = arr[j], arr[i]
+            j += 1
 
     return arr
 
+def move_zeros_to_end_optimal_unordered(arr):
+    j=len(arr)-1
+    i=0
+    while i<=j:
+        if arr[i]==0:
+            arr[j],arr[i]=arr[i],arr[j]
+            j-=1
+        else:
+            i+=1
+
+    return arr
+
+
 print(move_zeros_to_end_optimal([1,0,2,0,3,4,5,0,6,7,0,9,10]))
 
+print(move_zeros_to_end_optimal_unordered([1,0,2,0,3,4,5,0,6,7,0,9,10]))
 
 def max_consecutive_ones(arr):
     count=0
