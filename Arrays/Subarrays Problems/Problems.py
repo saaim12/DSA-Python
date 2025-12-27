@@ -104,29 +104,40 @@ print(longest_subarray_with_sum_k_two_pointer([1,2,3],6))
 ##########################
 ## maximum subarray Sum ##
 ##########################
-# Kadane 's algorithm
-def Max_subarray_sum(arr):
-    if len(arr)==1:
-        return arr[0]
-    st=0
-    ans_st=0
-    max_sum=float('-inf')
-    sum=0
-    ans_end=0
+# =========================================================
+# KADANE'S ALGORITHM (MAX SUBARRAY SUM)
+# =========================================================
+
+
+
+def max_subarray_sum(arr):
+    curr_sum = 0
+    max_sum = float('-inf')
+
+    start = 0
+    ans_start = 0
+    ans_end = 0
+
     for i in range(len(arr)):
-        if sum==0:
-            st=i
-        sum+=arr[i]
-        if sum>max_sum:
-            max_sum=sum
-            ans_st=st
-            ans_end=i
-        if sum<0:
-            sum=0
+        curr_sum += arr[i]
+
+        if curr_sum > max_sum:
+            max_sum = curr_sum
+            ans_start = start
+            ans_end = i
+
+        if curr_sum < 0:
+            curr_sum = 0
+            start = i + 1
+
+    return max_sum, arr[ans_start:ans_end + 1]
 
 
-    return max_sum,arr[ans_st:ans_end+1]
+print(max_subarray_sum([-2,-3,4,-1,-2,1,5,-3]))
 
-print(Max_subarray_sum([-2,-3,4,-1,-2,1,5,-3]))
+
+
+
+
 
 

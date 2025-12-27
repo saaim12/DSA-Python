@@ -1,26 +1,95 @@
 from collections import Counter
-## majority elements
-def majority_elements_bruteForce(arr):
-    map={}
+
+# =========================================================
+# MAJORITY ELEMENT
+# =========================================================
+
+def majority_element_bruteforce(arr):
+    """
+    Brute force using hashmap
+    Time: O(n)
+    Space: O(n)
+    Returns: (frequency, element)
+    """
+    freq = {}
     for num in arr:
-        if num in map:
-            map[num]+=1
-        else:
-            map[num]=1
+        freq[num] = freq.get(num, 0) + 1
 
-    max_no=0
-    element=0
-    for k,v in map.items():
-        if v>max_no:
-            max_no=v
-            element=k
+    max_count = 0
+    element = None
+    for k, v in freq.items():
+        if v > max_count:
+            max_count = v
+            element = k
 
-    return max_no,element
+    return max_count, element
 
 
-## we can also use Counter builtin in python
-arr=[1,2,3,4,5,1,2,3,3,3,3,4,4]
-print(Counter(arr))
-print("max no of occourance , number ",majority_elements_bruteForce([2,2,3,3,1,1,2,2]))
+def majority_element_optimal(arr):
+    """
+    Boyer-Moore Voting Algorithm
+    Time: O(n)
+    Space: O(1)
+    Returns majority element if exists, else -1
+    """
+    count = 0
+    candidate = None
 
+    for num in arr:
+        if count == 0:
+            candidate = num
+        count += 1 if num == candidate else -1
+
+    # Verification step (IMPORTANT)
+    if arr.count(candidate) > len(arr) // 2:
+        return candidate
+    return -1
+
+
+# =========================================================
+# BEST TIME TO BUY AND SELL STOCK
+# =========================================================
+
+def best_time_to_buy_and_sell(prices):
+    """
+    One pass solution
+    Time: O(n)
+    Space: O(1)
+    """
+    if not prices:
+        return 0
+
+    min_price = prices[0]
+    max_profit = 0
+
+    for price in prices[1:]:
+        max_profit = max(max_profit, price - min_price)
+        min_price = min(min_price, price)
+
+    return max_profit
+
+
+
+
+
+# =========================================================
+# DRIVER CODE (TESTING)
+# =========================================================
+
+if __name__ == "__main__":
+
+    # Majority Element
+    print("-" * 50)
+    arr1 = [1, 2, 3, 3, 3, 3, 4]
+    print("Majority Brute Force:", majority_element_bruteforce(arr1))
+    print("Majority Optimal:", majority_element_optimal(arr1))
+    print("Using Counter:", Counter(arr1))
+
+    print("-" * 50)
+
+    # Best Time to Buy and Sell Stock
+    prices = [7, 1, 5, 3, 6, 4]
+    print("Max Profit:", best_time_to_buy_and_sell(prices))
+
+    print("-" * 50)
 
