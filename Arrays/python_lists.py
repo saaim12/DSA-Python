@@ -136,7 +136,14 @@ def merge(left, right):
 # Testing
 # ----------------------
 print("Naive two sum:", two_sum([1, 2, 3, 4, 5], 3))
-print("Better two sum:", two_sum_better([1, 2, 3, 4, 5], 3))
+print("Better two sum:", two_sum_2_better([1, 2, 3, 4, 5], 3))
 print("Rotated binary search:", binary_search_in_rotated_array([3,4,5,6,7,0,1,2], 0))
 print("Merge Sort:", merge_sort([19, 33, 44, -98, 0, 1, 2, 3]))
 missing_and_repeating_values([[9,1,7],[8,9,2],[3,4,6]])
+
+
+arr=[1,2,3]
+print(arr)
+arr.insert(44,43)
+print(arr[3])
+print(0-1)

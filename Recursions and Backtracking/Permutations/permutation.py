@@ -28,7 +28,7 @@ print(permutation([1,2,3]))
 # ✔ No arr[:i] + arr[i+1:]
 # ✔ Very efficient → O(n!) time with minimal overhead
 # ✔ Commonly used in interviews and LeetCode
-# ⭐ Optimized In-Place Permutation Code
+#  Optimized In-Place Permutation Code
 
 def permutation_2(arr):
     res=[]
