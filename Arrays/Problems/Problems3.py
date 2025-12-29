@@ -93,3 +93,32 @@ if __name__ == "__main__":
 
     print("-" * 50)
 
+
+
+def medianSlidingWindow( nums, k):
+    """
+    Find the median for every sliding window of size k.
+    :type nums: List[int]
+    :type k: int
+    :rtype: List[float]
+    """
+    def find_median(arr):
+        arr_sorted = sorted(arr)
+        n = len(arr_sorted)
+        mid = n // 2
+        if n % 2 == 0:
+            return (arr_sorted[mid-1] + arr_sorted[mid]) / 2.0
+        else:
+            return float(arr_sorted[mid])
+
+    res = []
+    left = 0
+    for i in range(len(nums)):
+        if i-left+1==k:
+            win=nums[left:i+1]
+            res.append(find_median(win))
+            left+=1
+    return res
+
+
+print(medianSlidingWindow([1,3,-1,-3,5,3,6,7],3))
