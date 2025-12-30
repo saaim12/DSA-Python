@@ -1,4 +1,6 @@
 # making all subarrays
+from collections import defaultdict
+
 arr=[1,2,3]
 res=[]
 for i in range(len(arr)):
@@ -138,4 +140,55 @@ print(max_subarray_sum([-2,-3,4,-1,-2,1,5,-3]))
 
 
 
+###################################
+# count subarrays with sum k      #
+###################################
+def count_subarrays_with_sum_k(arr,k):
+    count=0
+    n=len(arr)
+    res=[]
+    for i in range(n):
+        for j in range(i+1,n+1):
+            res.append(arr[i:j])
+
+    for subs in res:
+        if sum(subs)==k:
+            print(subs)
+            count+=1
+
+    return count
+
+print(count_subarrays_with_sum_k([1,2,3,-3,1,1,1,4,2,-3],k=3))
+
+def count_subarrays_with_sum_k_better(arr,k):
+    count=0
+    n=len(arr)
+    for i in range(n):
+        summed=0
+        for j in range(i,n):
+            summed+=arr[j]
+            if summed==k:
+                count+=1
+
+    return count
+
+print(count_subarrays_with_sum_k_better([1,2,3,-3,1,1,1,4,2,-3],k=3))
+
+def count_subarrays_with_sum_k_optimized(arr,k):
+    count=0
+    n=len(arr)
+    prefix_sum=0
+    mp=defaultdict(int)
+    mp[0]=1
+    for i in range(n):
+        prefix_sum+=arr[i]
+        if (prefix_sum-k) in mp:
+            count+=mp[prefix_sum-k]
+        mp[prefix_sum]+=1
+
+    return count
+
+
+print(count_subarrays_with_sum_k_optimized([1,2,3,-3,1,1,1,4,2,-3],k=3))
+print(count_subarrays_with_sum_k_optimized([1,2,3],k=3))
 
