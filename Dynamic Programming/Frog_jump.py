@@ -116,3 +116,49 @@ This problem is equivalent to:
 - Climbing stairs with cost
 - Fibonacci with constraints
 """
+
+
+def frog_jump_k(height, k):
+    """
+    Calculate the minimum cost to reach the last stone,
+    where you can jump up to k steps at a time.
+
+    :param height: List[int] - heights of stones
+    :param k: int - maximum jump length
+    :return: int - minimum total cost
+    """
+    n = len(height)
+    dp = [-1] * n  # Memoization array
+
+    def min_cost(ind):
+        # Base case: first stone, cost is 0
+        if ind == 0:
+            return 0
+
+        # Return cached result
+        if dp[ind] != -1:
+            return dp[ind]
+
+        # Try all possible jumps from 1 to k
+        min_steps = float('inf')
+        for j in range(1, k + 1):
+            if ind - j >= 0:
+                jump_cost = min_cost(ind - j) + abs(height[ind] - height[ind - j])
+                min_steps = min(min_steps, jump_cost)
+
+        dp[ind] = min_steps
+        return dp[ind]
+
+    # Compute min cost to reach last stone
+    return min_cost(n - 1)
+
+
+# =======================
+# Example Usage
+# =======================
+height = [30, 10, 60, 10, 60, 50]
+k = 2
+print()
+print("-"*50)
+print("frog jump with k steps")
+print(frog_jump_k(height, k))  # Output: 40
