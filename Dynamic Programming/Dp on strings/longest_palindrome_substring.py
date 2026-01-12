@@ -1,4 +1,4 @@
-def longest_common_subsequence_recursive(s1):
+def longest_palindromic_subsequence_recursive(s1):
     s2="".join(reversed(s1))
     def check(idx1,idx2):
         if idx1<0 or idx2<0:
@@ -11,9 +11,9 @@ def longest_common_subsequence_recursive(s1):
 
     return check(len(s1)-1,len(s2)-1)
 
-print(longest_common_subsequence_recursive("abcde"))
+print(longest_palindromic_subsequence_recursive("abcde"))
 
-def longest_common_subsequence_with_tab(s1):
+def longest_palindromic_subsequence_with_tab(s1):
     s2="".join(reversed(s1))
     n, m = len(s1), len(s2)
     dp = [[0] * (m + 1) for i in range(n + 1)]
